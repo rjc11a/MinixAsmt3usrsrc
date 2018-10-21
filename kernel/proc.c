@@ -1241,6 +1241,16 @@ PRIVATE void enqueue_head(struct proc *rp)
       rp->p_nextready = rdy_head[q];		/* chain head of queue */
       rdy_head[q] = rp;				/* set new queue head */
 
+ //  This is for the unfair method
+ //  if (!rdy_head[q]) 
+ //    {		
+ //    rdy_head[q] = rdy_tail[q] = rp; 		/* create a new queue */
+ //    rp->p_nextready = NULL;		/* mark new end */
+ //    }
+ //    else						/* add to TAIL of queue */
+ //    rp->p_nextready = rdy_tail[q];		/* chain TAIL of queue */
+ //    rdy_tail[q] = rp;	
+ 
 #if DEBUG_SANITYCHECKS
   assert(runqueues_ok());
 #endif
