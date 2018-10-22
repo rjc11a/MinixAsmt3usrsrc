@@ -34,7 +34,7 @@ PUBLIC int do_fork(struct proc * caller, message * m_ptr)
   struct mem_map *map_ptr;	/* virtual address of map inside caller (PM) */
   int gen, r;
   int p_proc;
-
+	
   if(!isokendpt(m_ptr->PR_ENDPT, &p_proc))
 	return EINVAL;
 
@@ -91,6 +91,11 @@ PUBLIC int do_fork(struct proc * caller, message * m_ptr)
 
   make_zero64(rpc->p_cpu_time_left);
   make_zero64(rpc->p_cycles);
+  
+  /* 
+    make_zero64(rpc->timeSegment);
+    make_zero64(rpc->timeConsumed);
+ */
 
   /* If the parent is a privileged process, take away the privileges from the 
    * child process and inhibit it from running by setting the NO_PRIV flag.
