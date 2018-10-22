@@ -61,7 +61,7 @@ PRIVATE clock_t realtime = 0;		      /* real time clock */
 
 /*This variable represents when the current segment began
 
-PUBLIC time_t beginTime = boot_time + realtime/HZ;
+PUBLIC time_t currentTime = boot_time + realtime/HZ;
 
 */
 
