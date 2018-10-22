@@ -275,7 +275,7 @@ PUBLIC int main(void)
   IPCNAME(SENDNB);
   IPCNAME(SENDA);
 
-  assert(runqueues_ok());
+/*  assert(runqueues_ok());*/
 
   switch_to_user();
   NOT_REACHABLE;
