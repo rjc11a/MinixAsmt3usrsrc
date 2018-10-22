@@ -1172,8 +1172,8 @@ PUBLIC void enqueue(
  */
   int q = rp->p_priority;	 		/* scheduling queue to use */
 
- // This is for the FCFS method, only use 1 queue and no priority. Changed also in enqueue_head and dequeue
-//  int q = 0;
+ /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue_head and dequeue
+  int q = 0; */
 
 #if DEBUG_RACE
   /* With DEBUG_RACE, schedule everyone at the same priority level. */
@@ -1222,8 +1222,8 @@ PUBLIC void enqueue(
 PRIVATE void enqueue_head(struct proc *rp)
 {
   const int q = rp->p_priority;	 		/* scheduling queue to use */
-	// This is for the FCFS method, only use 1 queue and no priority. Changed also in enqueue and dequeue
-//  const int q = 0;
+	/* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue and dequeue
+  const int q = 0;*/
 
   assert(proc_ptr_ok(rp));
   assert(proc_is_runnable(rp));
@@ -1242,19 +1242,21 @@ PRIVATE void enqueue_head(struct proc *rp)
       rdy_head[q] = rdy_tail[q] = rp; 		/* create a new queue */
       rp->p_nextready = NULL;		/* mark new end */
   }
-  else						/* add to head of queue */
+  else{						/* add to head of queue */
       rp->p_nextready = rdy_head[q];		/* chain head of queue */
       rdy_head[q] = rp;				/* set new queue head */
+}
 
- //  This is for the unfair method
- //  if (!rdy_head[q]) 
- //    {		
- //    rdy_head[q] = rdy_tail[q] = rp; 		/* create a new queue */
- //    rp->p_nextready = NULL;		/* mark new end */
- //    }
- //    else						/* add to TAIL of queue */
- //    rp->p_nextready = rdy_tail[q];		/* chain TAIL of queue */
- //    rdy_tail[q] = rp;	
+ /*  This is for the unfair method (comments with // dont compile for c)
+  if (!rdy_head[q]) {		
+    	rdy_head[q] = rdy_tail[q] = rp; 		 
+    	rp->p_nextready = NULL;		
+    }
+    else{
+      rdy_tail[q]->p_nextready = rp;
+      rdy_tail[q] = rp;
+      rp->p_nextready = NULL;
+      }	*/
  
 #if DEBUG_SANITYCHECKS
   assert(runqueues_ok());
@@ -1272,8 +1274,8 @@ PUBLIC void dequeue(const struct proc *rp)
  * is picked to run by calling pick_proc().
  */
   register int q = rp->p_priority;		/* queue to use */
- // This is for the FCFS method, only use 1 queue and no priority
-//  register int q = 0;
+ /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority
+  register int q = 0;*/
 
   register struct proc **xpp;			/* iterate over queue */
   register struct proc *prev_xp;
@@ -1341,6 +1343,10 @@ PRIVATE struct proc * pick_proc(void)
  * When a billable process is selected, record it in 'bill_ptr', so that the 
  * clock task can tell who to bill for system time.
  */
+
+ /*this is for the random process, comment everything else out
+ return random_process(rdy_head[0]); */
+
   register struct proc *rp;			/* process to run */
   int q;				/* iterate over queues */
 
