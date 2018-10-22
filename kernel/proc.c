@@ -1170,10 +1170,11 @@ PUBLIC void enqueue(
  * The mechanism is implemented here.   The actual scheduling policy is
  * defined in sched() and pick_proc().
  */
-  int q = rp->p_priority;	 		/* scheduling queue to use */
+ /*This is for standard
+  int q = rp->p_priority;*/	 		/* scheduling queue to use */
 
- /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue_head and dequeue
-  int q = 0; */
+ /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue_head and dequeue*/
+  int q = 0; 
 
 #if DEBUG_RACE
   /* With DEBUG_RACE, schedule everyone at the same priority level. */
@@ -1221,9 +1222,10 @@ PUBLIC void enqueue(
  */
 PRIVATE void enqueue_head(struct proc *rp)
 {
-  const int q = rp->p_priority;	 		/* scheduling queue to use */
-	/* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue and dequeue
-  const int q = 0;*/
+	/* this is for standard 
+  const int q = rp->p_priority;	 */		/* scheduling queue to use */
+	/* This is for the FCFS method AND RANDOM, only use 1 queue and no priority. Changed also in enqueue and dequeue */
+  const int q = 0;
 
   assert(proc_ptr_ok(rp));
   assert(proc_is_runnable(rp));
@@ -1273,9 +1275,10 @@ PUBLIC void dequeue(const struct proc *rp)
  * it has blocked.  If the currently active process is removed, a new process
  * is picked to run by calling pick_proc().
  */
-  register int q = rp->p_priority;		/* queue to use */
- /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority
-  register int q = 0;*/
+ /*This is for standard
+  register int q = rp->p_priority; */		/* queue to use */
+ /* This is for the FCFS method AND RANDOM, only use 1 queue and no priority*/
+  register int q = 0;
 
   register struct proc **xpp;			/* iterate over queue */
   register struct proc *prev_xp;
